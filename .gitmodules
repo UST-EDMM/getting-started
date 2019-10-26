@@ -1,0 +1,3 @@
+[submodule "spring-petclinic"]
+	path = spring-petclinic
+	url = https://github.com/UST-EDMM/spring-petclinic.git

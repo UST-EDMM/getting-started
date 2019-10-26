@@ -1,8 +1,11 @@
-### IntelliJ IDEA ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
 .idea
 *.iws
 *.iml
 *.ipr
-
-### VS Code ###
+*.log
 .vscode/
+
+compose/
+kubernetes/

@@ -8,7 +8,7 @@ components:
   pet_clinic:
     type: web_application
     artifacts:
-      - war: ./files/petclinic/petclinic.war
+      - war: ../spring-petclinic/target/petclinic.war
     operations:
       configure: ./files/petclinic/configure.sh
     relations:
