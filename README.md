@@ -62,8 +62,17 @@ Setup the [EDMM Transformation Framework](https://github.com/UST-EDMM/transforma
   kubectl apply -f ./icsoc-demo/kubernetes/pet_clinic/pet-clinic-deployment.yaml -f ./icsoc-demo/kubernetes/pet_clinic/pet-clinic-service.yaml
   ```
 
-* Check deployment:
+* Launch sample application:
 
   ```shell script
+  minikube service pet-clinic-service
+  # or monitor
   minikube dashboard
+  ```
+
+* Shutdown application:
+
+  ```shell script
+  minikube stop
+  minikube delete
   ```
