@@ -76,3 +76,36 @@ Setup the [EDMM Transformation Framework](https://github.com/UST-EDMM/transforma
   minikube stop
   minikube delete
   ```
+
+
+
+## Transform to Docker Compose
+
+* Execute the following statement to start the transformation to Kubernetes:
+  
+  ```shell script
+  edmm transform compose ./icsoc-demo/deployment.yaml
+  ```
+
+* Build Docker images:
+
+  ```shell script
+  docker-compose -f .\icsoc-demo\compose\docker-compose.yml build
+  ```
+
+* Start Docker Compose configuration:
+
+  ```shell script
+  docker-compose -f .\icsoc-demo\compose\docker-compose.yml up
+  # restart sample application
+  docker-compose -f .\icsoc-demo\compose\docker-compose.yml restart pet-clinic
+  ```
+
+* Launch sample application:
+  Open a browser window and navigate to `http://{docker-hostname}:8080/petclinic`
+
+* Shutdown application:
+
+  ```shell script
+  docker-compose -f .\icsoc-demo\compose\docker-compose.yml down
+  ```
