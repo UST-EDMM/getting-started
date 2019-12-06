@@ -38,7 +38,6 @@ EOM
     systemctl daemon-reload
     systemctl enable tomcat
     systemctl start tomcat
-    systemctl status tomcat
 else
     echo "INFO: Starting Tomcat in foreground"
     export CATALINA_BASE="/opt/tomcat/latest"
