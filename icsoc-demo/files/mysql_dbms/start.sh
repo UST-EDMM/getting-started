@@ -13,7 +13,6 @@ if [[ $? -eq 0 ]]; then
     systemctl daemon-reload
     systemctl enable mysql
     systemctl start mysql
-    systemctl status mysql
 else
     echo "INFO: Starting MySQL daemon in foreground"
     mysqld
