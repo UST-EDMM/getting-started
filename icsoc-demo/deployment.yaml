@@ -11,7 +11,7 @@ components:
       - war: ../spring-petclinic/target/petclinic.war
     operations:
       configure: ./files/petclinic/configure.sh
-      start: ./files/petclinic/start.sh
+      # start: ./files/petclinic/start.sh
     relations:
       - hosted_on: pet_clinic_tomcat
       - connects_to: db
@@ -43,9 +43,9 @@ components:
     type: mysql_dbms
     properties:
       root_password: petclinic
-    operations:
-      create: ./files/mysql_dbms/create.sh
-      start: ./files/mysql_dbms/start.sh
+    # operations:
+    #   create: ./files/mysql_dbms/create.sh
+    #   start: ./files/mysql_dbms/start.sh
     relations:
       - hosted_on: ubuntu
 
