@@ -11,7 +11,7 @@ components:
       - war: ../spring-petclinic/target/petclinic.war
     operations:
       configure: ./files/petclinic/configure.sh
-      # start: ./files/petclinic/start.sh
+      start: ./files/petclinic/start.sh
     relations:
       - hosted_on: pet_clinic_tomcat
       - connects_to: db
@@ -43,9 +43,9 @@ components:
     type: mysql_dbms
     properties:
       root_password: petclinic
-    # operations:
-    #   create: ./files/mysql_dbms/create.sh
-    #   start: ./files/mysql_dbms/start.sh
+     operations:
+       create: ./files/mysql_dbms/create.sh
+       start: ./files/mysql_dbms/start.sh
     relations:
       - hosted_on: ubuntu
 
@@ -57,7 +57,7 @@ components:
       machine_image: ubuntu
       instance_type: large
       key_name: edmm
-      public_key: |
+      public_key: |-
         -----BEGIN PUBLIC KEY-----
         MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
         FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
