@@ -27,7 +27,7 @@ You can start the modeling tool and the transformation framework as a docker ser
 docker-compose up -d
 ```
 
-Afterwards, Winery is running on <localhost:8080> and is preconfigured to support EDMM modeling.
+Afterwards, Winery is running on <http://localhost:8080> and is preconfigured to support EDMM modeling.
 
 If you want to deploy the application on a server, change the `PUBLIC_HOSTNAME` in the [.env](.env) file to your
 domain name or respective IP address before starting docker-compose.
@@ -40,7 +40,7 @@ docker-compose down
 
 ### Getting Started with Winery
 
-After opening Winery on <localhost:8080>, it displays two already contained example applications, `PetClinc-Cloud` and `PetClinic-IaaS`.
+After opening Winery on <http://localhost:8080>, it displays two already contained example applications, `PetClinc-Cloud` and `PetClinic-IaaS`.
 You can see the graphical model of an application by clicking one of them.
 
 ![Winery Overview](docs/winery-ServiceTemplate-overview.png)
