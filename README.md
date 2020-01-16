@@ -54,7 +54,7 @@ Click `Show EDMM Transformation Check`.
 
 ![Winery Topologymodeler](docs/winery-Topoloymodeler-transformation_check2.png)
 
-In the sidebar, hover over the different technologies to highlight the components are not supported.
+In the sidebar, hover over the different technologies to highlight the components that are not supported.
 
 ![Winery Topologymodeler](docs/winery-Topoloymodeler-transformation_check.png)
 
