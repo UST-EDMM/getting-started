@@ -110,7 +110,7 @@ mvn -f ./spring-petclinic/pom.xml clean package -DskipTests
 * Execute the following statement to start the transformation to Kubernetes:
   
   ```shell script
-  edmm transform kubernetes ./icsoc-demo/deployment.yaml
+  edmm transform kubernetes ./2019-icsoc/deployment.yaml
   ```
 
 * Start a PowerShell with administrative rights and start a Kubernetes cluster:
@@ -128,15 +128,15 @@ mvn -f ./spring-petclinic/pom.xml clean package -DskipTests
 * Build Docker images:
 
   ```shell script
-  docker build -t db ./icsoc-demo/kubernetes/db
-  docker build -t pet-clinic ./icsoc-demo/kubernetes/pet_clinic
+  docker build -t db ./2019-icsoc/kubernetes/db
+  docker build -t pet-clinic ./2019-icsoc/kubernetes/pet_clinic
   ```
 
 * Apply Kubernetes configuration:
 
   ```shell script
-  kubectl apply -f ./icsoc-demo/kubernetes/db/db-deployment.yaml -f ./icsoc-demo/kubernetes/db/db-service.yaml
-  kubectl apply -f ./icsoc-demo/kubernetes/pet_clinic/pet-clinic-deployment.yaml -f ./icsoc-demo/kubernetes/pet_clinic/pet-clinic-service.yaml
+  kubectl apply -f ./2019-icsoc/kubernetes/db/db-deployment.yaml -f ./2019-icsoc/kubernetes/db/db-service.yaml
+  kubectl apply -f ./2019-icsoc/kubernetes/pet_clinic/pet-clinic-deployment.yaml -f ./2019-icsoc/kubernetes/pet_clinic/pet-clinic-service.yaml
   ```
 
 * Launch sample application:
@@ -159,21 +159,21 @@ mvn -f ./spring-petclinic/pom.xml clean package -DskipTests
 * Execute the following statement to start the transformation to Kubernetes:
   
   ```shell script
-  edmm transform compose ./icsoc-demo/deployment.yaml
+  edmm transform compose ./2019-icsoc/deployment.yaml
   ```
 
 * Build Docker images:
 
   ```shell script
-  docker-compose -f .\icsoc-demo\compose\docker-compose.yml build
+  docker-compose -f .\2019-icsoc\compose\docker-compose.yml build
   ```
 
 * Start Docker Compose configuration:
 
   ```shell script
-  docker-compose -f .\icsoc-demo\compose\docker-compose.yml up
+  docker-compose -f .\2019-icsoc\compose\docker-compose.yml up
   # restart sample application
-  docker-compose -f .\icsoc-demo\compose\docker-compose.yml restart pet-clinic
+  docker-compose -f .\2019-icsoc\compose\docker-compose.yml restart pet-clinic
   ```
 
 * Launch sample application:
@@ -182,7 +182,7 @@ mvn -f ./spring-petclinic/pom.xml clean package -DskipTests
 * Shutdown application:
 
   ```shell script
-  docker-compose -f .\icsoc-demo\compose\docker-compose.yml down
+  docker-compose -f .\2019-icsoc\compose\docker-compose.yml down
   ```
 
 ---
