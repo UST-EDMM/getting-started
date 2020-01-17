@@ -75,7 +75,7 @@ Click `Show EDMM Transformation Check`.
 
 In the sidebar, hover over the different technologies to highlight the components that are not supported.
 
-![](docs/scenario-paas-saas-1.png)
+![](docs/scenario-paas-saas-2.png)
 
 If the transformation check is enabled and you add a new component from the Palette or create a new relation,
 the application is resent to the transformation framework and the transformation check is updated. 
