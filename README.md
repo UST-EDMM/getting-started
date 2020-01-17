@@ -3,73 +3,92 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## Run the Modeling Tool including Transformation Checks 
+The EDMM Modeling, Decision Support, and Transformation System consists of three components:
+(1) the [EDMM Modeling Environment](https://github.com/eclipse/winery),
+(2) the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework), and
+(3) the [EDMM CLI](https://github.com/UST-EDMM/transformation-framework/releases).
 
-### Prerequisites
+
+## Usage
+
+### Install and use the EDMM CLI
+
+* Download the latest `edmm.zip` distribution package from the [releases](https://github.com/UST-EDMM/transformation-framework/releases) page
+* Extract the files to a location on your filesystem and add it to your path variable (Linux: `$PATH`, Windows: `%PATH%`).
+* Run the CLI: `edmm transform <target> <input>`
+
+The EDMM Transformation Framework supports YAML files as input, according to the published [YAML specification](https://github.com/UST-EDMM/spec-yaml).
+Specified components and their respective component types must be supplied in a single file.
+An [example](edmm-core/src/test/resources/templates/scenario_iaas.yml) shows the usage of the built-in types to model an application deployment based on virtual compute resources, e.g., virtual machines having some software components installed.
+
+The generated deployment technology-specific models and artifacts will be stored relative to the YAML input file.
+
+
+
+### Run the EDMM Modeling Tool 
+
+Prerequisites:
 
 * Git
-* Docker
+* Docker and Docker Compose
 
-### Setup
-
-First, clone the repository:
+Clone the repository:
 
 ```shell script
 git clone https://github.com/UST-EDMM/getting-started.git
 ```
 
-### Running the Modeling Tool
-
-We use [Winery](https://github.com/eclipse/winery) to create EDMM-based models graphically.
-You can start the modeling tool and the transformation framework as a docker service:
+Start the environment:
 
 ```shell
 docker-compose up -d
 ```
 
-Afterwards, Winery is running on <http://localhost:8080> and is preconfigured to support EDMM modeling.
+Afterwards, EDMM Modeling Tool is running on <http://localhost:8080> and is preconfigured to support EDMM-based modeling.
 
-If you want to deploy the application on a server, change the `PUBLIC_HOSTNAME` in the [.env](.env) file to your
-domain name or respective IP address before starting docker-compose.
+> If you want to deploy the application on a server, change the `PUBLIC_HOSTNAME` in the [.env](.env) file to your
+domain name or respective IP address before starting it with Docker Compose.
 
-To terminate the applications, run:
+To terminate the system, run the following command:
 
 ```shell
 docker-compose down
 ``` 
 
-### Getting Started with Winery
 
-After opening Winery on <http://localhost:8080>, it displays two already contained example applications, `PetClinc-Cloud` and `PetClinic-IaaS`.
+
+### Getting Started with the EDMM Modeling Tool
+
+After opening the EDMM Modeling Tool on <http://localhost:8080>, it displays two example applications, `PetClinc-Cloud` and `PetClinic-IaaS`.
 You can see the graphical model of an application by clicking one of them.
 
-![Winery Overview](docs/winery-ServiceTemplate-overview.png)
+![](docs/modeling-tool-overview.png)
 
 Afterwards, navigate to the `Topology Tempalte` tab and click the `Open Editor` button.
 
-![Winery open Topologymodeler](docs/winery-ServiceTemplate-open_editor.png)
+![](docs/modeling-tool-open-editor.png)
 
 Now you can enable the transformation check, to see which technology supports the currently modeled application.
 Click `Show EDMM Transformation Check`.
 
-![Winery Topologymodeler](docs/winery-Topoloymodeler-transformation_check2.png)
+![](docs/scenario-iaas-2.png)
 
 In the sidebar, hover over the different technologies to highlight the components that are not supported.
 
-![Winery Topologymodeler](docs/winery-Topoloymodeler-transformation_check.png)
+![](docs/scenario-paas-saas-1.png)
 
 If the transformation check is enabled and you add a new component from the Palette or create a new relation,
 the application is resent to the transformation framework and the transformation check is updated. 
 
-## Transforming EDMM Models
 
-### Prerequisites
+
+### Transforming EDMM Models
+
+Prerequisites:
 
 * Git
 * Maven
 * minikube
-
-### Setup
 
 Clone the repository:
 
@@ -84,9 +103,7 @@ Build the sample application:
 mvn -f ./spring-petclinic/pom.xml clean package -DskipTests
 ```
 
-Setup the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework#usage)
-
-### Transform to Kubernetes 
+#### Transform to Kubernetes 
 
 > Kubernetes runs in `minikube` on HyperV.
 
@@ -137,9 +154,7 @@ Setup the [EDMM Transformation Framework](https://github.com/UST-EDMM/transforma
   minikube delete
   ```
 
-
-
-### Transform to Docker Compose
+#### Transform to Docker Compose
 
 * Execute the following statement to start the transformation to Kubernetes:
   
@@ -169,3 +184,23 @@ Setup the [EDMM Transformation Framework](https://github.com/UST-EDMM/transforma
   ```shell script
   docker-compose -f .\icsoc-demo\compose\docker-compose.yml down
   ```
+
+---
+
+## Supported Scenario
+
+### ESOCC 2020 Prototype
+
+In this demonstration, we show the modeling, decision support, and transformation based on Terraform.
+The motivation scenario is depicted in the screenshot below. 
+The corresponding EDMM model in YAML can be found [here](2020-esocc/deployment.yml).
+
+![](docs/scenario-paas-saas-1.png)
+
+### ICSOC 2019 Demonstration
+
+In this demonstration, all listed plugins focus on application deployments that are based on virtual computing resources and the software that needs to be deployed on them including their configuration and orchestration.
+The following figure shows the application stacks that is used in our test cases.
+The following [example](2019-icsoc/deployment.yaml) shows the resulting EDMM model.
+
+![](docs/scenario-iaas-1.jpg)
