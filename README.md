@@ -46,7 +46,7 @@ docker-compose up -d
 
 Afterward, EDMM Modeling Tool is running on <http://localhost:8080> and is preconfigured to support EDMM-based modeling.
 
-> If you want to deploy the application on a server, change the `PUBLIC_HOSTNAME` in the [.env](.env) file to your
+> If you want to deploy the application on a server, change the `PUBLIC_HOSTNAME` in the [.env](_.env) file to your
 domain name or respective IP address before starting it with Docker Compose.
 
 To terminate the system, run the following command:
