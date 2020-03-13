@@ -6,6 +6,4 @@ target/
 *.ipr
 *.log
 .vscode/
-
-compose/
-kubernetes/
+.env
