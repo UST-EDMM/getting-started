@@ -15,6 +15,10 @@ At this stage of the prototype, we do not use a standardized workflow language, 
 The created workflow for execution is interpreted by the EDMM Transformation Framework currently, which will trigger the respective *Execution Plugin* to trigger the deployment based on a given DTSM.
 Further, it also implements the capability to *retrieve*, *store*, and *distribute* input and outputs before and after each workflow task.
 
+## Prototype
+
+The prototype's source code and a description how it is used is avialable [here](https://github.com/diezfx/transformation-framework).
+
 ---
 
 ## Learn More
