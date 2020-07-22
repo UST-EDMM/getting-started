@@ -17,7 +17,7 @@ Further, it also implements the capability to *retrieve*, *store*, and *distribu
 
 ## Prototype
 
-The prototype's source code and a description how it is used is avialable [here](https://github.com/diezfx/transformation-framework).
+The prototype's source code and a description how to use it is avialable in [another repository](https://github.com/diezfx/transformation-framework).
 
 ---
 
