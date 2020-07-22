@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 The EDMM Modeling, Decision Support, and Transformation System consists of three components:
-(1) the [EDMM Modeling Environment](https://github.com/eclipse/winery),
+(1) the [EDMM Modeling Tool](https://github.com/eclipse/winery),
 (2) the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework), and
 (3) the [EDMM CLI](https://github.com/UST-EDMM/transformation-framework/releases).
 
