@@ -1,0 +1,61 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  annotations: {}
+  labels:
+    app: "pet-clinic"
+  name: "pet-clinic"
+  namespace: "default"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "pet-clinic"
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app: "pet-clinic"
+      name: "pet-clinic"
+    spec:
+      containers:
+      - env:
+        - name: "OS_FAMILY"
+          value: "linux"
+        - name: "MACHINE_IMAGE"
+          value: "ubuntu"
+        - name: "PRIV_KEY_PATH"
+          value: "./files/ubuntu/key.pem"
+        - name: "PORT"
+          value: "8080"
+        - name: "INSTANCE_TYPE"
+          value: "large"
+        - name: "DB_PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_PORT"
+              name: "pet-clinic-config"
+        - name: "DB_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_PASSWORD"
+              name: "pet-clinic-config"
+        - name: "DB_HOSTNAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_HOSTNAME"
+              name: "pet-clinic-config"
+        - name: "DB_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_USER"
+              name: "pet-clinic-config"
+        image: "pet-clinic:latest"
+        imagePullPolicy: "Never"
+        name: "pet-clinic"
+        ports:
+        - containerPort: 8080
+          name: "pet-clinic-tom"
+      nodeSelector: {}
+

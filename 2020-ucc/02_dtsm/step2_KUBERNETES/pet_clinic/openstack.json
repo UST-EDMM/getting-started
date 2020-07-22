@@ -1,0 +1,11 @@
+{
+  "os_auth_url": "https://idm01.bw-cloud.org:5000/v3/",
+  "os_project_id": "fa96f6d80acd477f84fe43ec952f139d",
+  "os_project_name": "Projekt_st107550@uni-stuttgart.de",
+  "os_user_domain_name": "Default",
+  "os_username": "st107550@uni-stuttgart.de",
+  "os_password": "Dx3fk7m5y%abcd",
+  "os_region_name": "Karlsruhe",
+  "os_interface": "public",
+  "os_identity_api_version": "3"
+}

@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  annotations: {}
+  labels:
+    app: "pet-clinic-service"
+  name: "pet-clinic-service"
+  namespace: "default"
+spec:
+  ports:
+  - name: "pet-clinic-tom"
+    port: 8080
+  selector:
+    app: "pet-clinic"
+  type: "NodePort"
+

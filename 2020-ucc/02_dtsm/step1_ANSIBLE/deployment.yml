@@ -1,0 +1,86 @@
+---
+# add hosts
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - include_vars:
+        file: ubuntu_db_host.json
+        name: requiredProperties
+    - name: Add host
+      add_host:
+        name: ubuntu_db
+        ansible_host: '{{requiredProperties.HOSTNAME}}'
+        ansible_user: ubuntu
+        ansible_ssh_extra_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+        ansible_ssh_private_key_file: /mnt/e/Projects/masterthesis/transformation-framework/icsoc-demo/multi/step1_ANSIBLE/./files/ubuntu/key.pem
+        ansible_python_interpreter: /usr/bin/python3
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      wait_for:
+        host: '{{requiredProperties.HOSTNAME}}'
+        port: 22
+# Play for component dbms
+- name: dbms
+  hosts: ubuntu_db
+  become: yes
+  become_user: root
+  environment:
+    PRIV_KEY_PATH: ./files/ubuntu/key.pem
+    ROOT_PASSWORD: petclinic
+    OS_FAMILY: linux
+    PORT: 3306
+    MACHINE_IMAGE: ubuntu
+    INSTANCE_TYPE: large
+  tasks:
+    - include_vars:
+        file: dbms_requiredProps.json
+
+        name: requiredProperties
+    - name: cmd
+      script: ./files/dbms/create.sh
+      register: hello
+      environment:
+        HOSTNAME: '{{requiredProperties.HOSTNAME}}'
+    - debug: msg="{{ hello.stdout }}"
+    - name: cmd
+      script: ./files/dbms/start.sh
+      register: hello
+      environment:
+        HOSTNAME: '{{requiredProperties.HOSTNAME}}'
+    - debug: msg="{{ hello.stdout }}"
+
+# Play for component db
+- name: db
+  hosts: ubuntu_db
+  become: yes
+  become_user: root
+  environment:
+    SCHEMA_NAME: petclinic
+    PRIV_KEY_PATH: ./files/ubuntu/key.pem
+    ROOT_PASSWORD: petclinic
+    PASSWORD: petclinic
+    OS_FAMILY: linux
+    PORT: 3306
+    MACHINE_IMAGE: ubuntu
+    USER: pc
+    INSTANCE_TYPE: large
+  tasks:
+    - include_vars:
+        file: db_requiredProps.json
+
+        name: requiredProperties
+    - name: Make sure destination dir exists
+      file:
+        path:  '{{ "/opt/db/schema.sql" | dirname }}'
+        state: directory
+    - name: Copy file to remote
+      copy:
+        src: ./files/db/schema.sql
+        dest: /opt/db/schema.sql
+    - name: cmd
+      script: ./files/db/configure.sh
+      register: hello
+      environment:
+        HOSTNAME: '{{requiredProperties.HOSTNAME}}'
+    - debug: msg="{{ hello.stdout }}"
+
+

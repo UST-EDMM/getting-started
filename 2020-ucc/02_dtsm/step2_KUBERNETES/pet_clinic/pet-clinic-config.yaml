@@ -1,0 +1,10 @@
+apiVersion: v1
+metadata:
+  name: pet-clinic-config
+  namespace: default
+data:
+  DB_USER: pc
+  DB_PORT: '3306'
+  DB_HOSTNAME: 193.196.37.75
+  DB_PASSWORD: petclinic
+

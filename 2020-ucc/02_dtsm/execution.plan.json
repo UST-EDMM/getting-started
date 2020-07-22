@@ -1,0 +1,37 @@
+{
+  "steps": [
+    {
+      "tech": "TERRAFORM",
+      "components": [
+        {
+          "name": "ubuntu_db"
+        }
+      ]
+    },
+    {
+      "tech": "ANSIBLE",
+      "components": [
+        {
+          "name": "dbms"
+        },
+        {
+          "name": "db"
+        }
+      ]
+    },
+    {
+      "tech": "KUBERNETES",
+      "components": [
+        {
+          "name": "ubuntu_app"
+        },
+        {
+          "name": "pet_clinic_tomcat"
+        },
+        {
+          "name": "pet_clinic"
+        }
+      ]
+    }
+  ]
+}
