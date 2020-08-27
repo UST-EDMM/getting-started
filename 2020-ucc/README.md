@@ -1,23 +1,22 @@
 
 # UCC 2020 Motivating Scenario
 
-The [holistic EDMM model](01_edmm) defines the motivating scenario to deploy a Java application connecting to a MySQL database at runtime.
+The [overall EDMM model](01_edmm) defines our case study scenario to deploy a Java application connecting to a MySQL database at runtime.
 It was modeled and exported using the [EDMM Modeling Tool](https://github.com/eclipse/winery).
 
 Afterwards, the exported EDMM deployment [model](01_edmm/deployment.yml) was extended by the newly introduced syntax to define the deployment technology that should be used to deploy specific components.
 The `technology_regions` block defines the deployment technology, e.g., Ansible, and the respective components that should be deployed with this technology.
 
-From here, the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework) is used in **multi deployment** mode to split the holistic EDMM model and transform it into the chosen deployment technologies.
-For the motivating scenario, the result is available [here](02_dtsm) where separate deployment technology-specific models (DTSMs) have been created.
+From here, the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework) is used in **multi deployment** mode to divide the overall EDMM model into EDMM model fragments and to transform these deployable fragments into the _deployment technology-specific model_ (DTSM) of the chosen deployment technologies.
+For the case study, the result is available [here](02_dtsm) where separate DTSMs have been created.
 
-The orchestration workflow is currently available as simple JSON [file](02_dtsm/execution.plan.json) which defines the execution order for the generated DTSMs.
-At this stage of the prototype, we do not use a standardized workflow language, such as BPEL or BPMN, neither a respective workflow engine.
-The created workflow for execution is interpreted by the EDMM Transformation Framework currently, which will trigger the respective *Execution Plugin* to trigger the deployment based on a given DTSM.
+At this stage, our prototype employs a plugin-based orchestration component which derives the execution order from the overall EDMM model, the user-defined technology regions, and the resulting deployable EDMM model fragments. 
+The EDMM Transformation Framework currently will trigger the respective *Execution Plugin* to trigger the deployment based on a given DTSM.
 Further, it also implements the capability to *retrieve*, *store*, and *distribute* input and outputs before and after each workflow task.
 
 ## Prototype
 
-The prototype's source code and a description how to use it is avialable in [another repository](https://github.com/diezfx/transformation-framework).
+The prototype's source code and a description how to use it is avialable in [another repository](https://github.com/UST-EDMM/edmm/tree/multi-tool-deployment).
 
 ---
 
