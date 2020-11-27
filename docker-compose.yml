@@ -15,7 +15,7 @@ services:
     networks:
       - edmm
   transformation-framework:
-    image: ustedmm/transformation-framework:latest
+    image: ustedmm/edmm:latest
     ports:
       - '5000:5000'
     networks:
