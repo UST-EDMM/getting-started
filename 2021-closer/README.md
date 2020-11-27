@@ -1,4 +1,4 @@
-# 🧪
+🧪
 
 ## Automating the Deployment of Distributed Applications by <br> Combining Multiple Deployment Technologies
 
