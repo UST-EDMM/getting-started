@@ -1,5 +1,5 @@
 
-# UCC 2020 Motivating Scenario
+# Motivating Scenario
 
 The [overall EDMM model](01_edmm) defines our case study scenario to deploy a Java application connecting to a MySQL database at runtime.
 It was modeled and exported using the [EDMM Modeling Tool](https://github.com/eclipse/winery).
@@ -16,7 +16,7 @@ Further, it also implements the capability to *retrieve*, *store*, and *distribu
 
 ## Prototype
 
-The prototype's source code and a description how to use it is avialable in [another repository](https://github.com/UST-EDMM/edmm/tree/multi-tool-deployment).
+The prototype's source code and a description how to use it is available in this [repository](https://github.com/UST-EDMM/edmm/tree/multi-tool-deployment).
 
 ---
 
