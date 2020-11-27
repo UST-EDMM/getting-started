@@ -1,5 +1,5 @@
 
-## Automating the Deployment of Distributed Applications<br>by Combining Multiple Deployment Technologies
+## Automating the Deployment of Distributed Applications by <br> Combining Multiple Deployment Technologies
 
 ### Motivating Scenario
 
