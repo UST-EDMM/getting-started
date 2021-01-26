@@ -1,7 +1,7 @@
 version: '3'
 services:
   winery:
-    image: opentosca/winery:latest
+    image: ustedmm/edmm:latest
     environment:
       WINERY_HOSTNAME: ${PUBLIC_HOSTNAME}
       WORKFLOWMODELER_HOSTNAME: ${PUBLIC_HOSTNAME}
@@ -14,7 +14,7 @@ services:
       - '8080:8080'
     networks:
       - edmm
-  transformation-framework:
+  edmm:
     image: ustedmm/edmm:latest
     ports:
       - '5000:5000'
