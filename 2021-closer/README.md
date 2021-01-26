@@ -1,5 +1,8 @@
+🧪
 
-# Motivating Scenario
+## Automating the Deployment of Distributed Applications by <br> Combining Multiple Deployment Technologies
+
+### Motivating Scenario
 
 The [overall EDMM model](01_edmm) defines our case study scenario to deploy a Java application connecting to a MySQL database at runtime.
 It was modeled and exported using the [EDMM Modeling Tool](https://github.com/eclipse/winery).
@@ -14,13 +17,13 @@ At this stage, our prototype employs a plugin-based orchestration component whic
 The EDMM Transformation Framework currently will trigger the respective *Execution Plugin* to trigger the deployment based on a given DTSM.
 Further, it also implements the capability to *retrieve*, *store*, and *distribute* input and outputs before and after each workflow task.
 
-## Prototype
+### Prototype
 
 The prototype's source code and a description how to use it is available in this [repository](https://github.com/UST-EDMM/edmm/tree/multi-tool-deployment).
 
 ---
 
-## Learn More
+### Learn More
 
 * Michael Wurster, Uwe Breitenbücher, Michael Falkenthal, Christoph Krieger, Frank Leymann & Karoline Saatkamp:
   [**The Essential Deployment Metamodel: A Systematic Review of Deployment Automation Technologies**](https://link.springer.com/article/10.1007%2Fs00450-019-00412-x).
