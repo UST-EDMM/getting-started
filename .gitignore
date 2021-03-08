@@ -7,3 +7,5 @@ target/
 *.log
 .vscode/
 .env
+
+examples/sockshop/edmm.json

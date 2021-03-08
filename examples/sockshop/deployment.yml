@@ -107,7 +107,7 @@ components:
       key_name: empty
       public_key: empty
       os_family: linux
-      name: Compute
+      name: compute
       machine_image: ubuntu
       instance_type: large
   Compute_6:
@@ -192,11 +192,13 @@ components:
       - connects_to: MongoDB-Schema_0
       - hosted_on: Compute_4
     properties:
+      HATEAOS: user
       mongo_port: ${users-db.port}
       mongo_pass: ${users-db.root_password}
       workdir: github.com/microservices-demo/user
       port: '5000'
       entrypoint: main.go
+      USER_DATABASE: mongodb
       name: users
       mongo_user: ${users-db.root_user}
       mongo_host: ${users-db.public_address}
@@ -287,12 +289,14 @@ components:
       - connects_to: MongoDB_2
       - hosted_on: Compute_10
     properties:
+      mongodb_hostname: ${orders-db.public_address}
       shipping_port: ${shipping.port}
       port: '9999'
       payment_port: ${payment.port}
       payment_hostname: ${payment.public_address}
       name: orders
       shipping_hostname: ${shipping.public_address}
+      mongodb_port: ${orders-db.port}
     artifacts:
       - jar: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Orders/files/orders.jar
   RabbitMQ_0:
