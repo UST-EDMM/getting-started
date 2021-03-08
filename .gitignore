@@ -8,4 +8,4 @@ target/
 .vscode/
 .env
 
-examples/sockshop/edmm.json
+examples/sockshop/kubernetes/
