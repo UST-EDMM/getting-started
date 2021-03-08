@@ -1,0 +1,396 @@
+---
+components:
+  MySQL_Database_0:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_Database-Configure/files/configure.sh
+    relations:
+      - hosted_on: MySQL_DBMS_0
+    type: mysql_database
+    properties:
+      password: default_password
+      name: catalogue-db
+      schema_name: socksdb
+      user: catalogue_user
+    artifacts:
+      - sql: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Catalogue-Data/files/dump.sql
+  MongoDB-Schema_0:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MongoDB-Schema-Configure/files/configure.sh
+    relations:
+      - hosted_on: MongoDB_1
+    type: mongodb_schema
+    properties:
+      password: edmm
+      name: users-db
+      schema_name: users
+      user: edmm
+    artifacts:
+      - script: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Users-Data/files/data.js
+  MySQL_DBMS_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Create/files/create.sh
+    relations:
+      - hosted_on: Compute_6
+    type: mysql_dbms
+    properties:
+      port: '3306'
+      root_password: edmm
+      name: catalogue-dbms
+      version: '5.7'
+  Compute_8:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_9:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_0:
+    type: compute
+    properties:
+      key_name: test
+      public_key: test
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_1:
+    type: compute
+    properties:
+      public_key: test
+      key_name: test
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_2:
+    type: compute
+    properties:
+      key_name: empty
+      public_key: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_3:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_4:
+    type: compute
+    properties:
+      key_name: empty
+      public_key: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_5:
+    type: compute
+    properties:
+      key_name: empty
+      public_key: empty
+      os_family: linux
+      name: Compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_6:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Compute_7:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  Go_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Create/files/create.sh
+    type: go
+    relations:
+      - hosted_on: Compute_1
+    properties:
+      workdir: github.com/microservices-demo/payment
+      port: '9091'
+      entrypoint: github.com/microservices-demo/payment/cmd/paymentsvc
+      name: payment
+    artifacts:
+      - archive: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Payment/files/payment.zip
+  NodeJS_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/NodeJS-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/NodeJS-Create/files/create.sh
+    type: software_component
+    relations:
+      - connects_to: SpringBoot_1
+      - connects_to: SpringBoot_2
+      - connects_to: Go_1
+      - connects_to: Go_2
+      - hosted_on: Compute_0
+    properties:
+      users_port: ${users.port}
+      users_hostname: ${users.public_address}
+      catalogue_port: ${catalogue.port}
+      carts_hostname: ${carts.public_address}
+      port: '8080'
+      carts_port: ${carts.port}
+      name: front-end
+      orders_port: ${orders.port}
+      catalogue_hostname: ${catalogue.public_address}
+      orders_hostname: ${orders.public_address}
+    artifacts:
+      - archive: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Frontend/files/front-end.zip
+  Go_2:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Create/files/create.sh
+    type: go
+    relations:
+      - connects_to: MySQL_Database_0
+      - hosted_on: Compute_5
+    properties:
+      mysql_port: ${catalogue-db.port}
+      workdir: github.com/microservices-demo/catalogue
+      port: '9000'
+      entrypoint: github.com/microservices-demo/catalogue/cmd/cataloguesvc
+      name: catalogue
+      mysql_hostname: ${catalogue-db.public_address}
+    artifacts:
+      - archive: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Catalogue/files/catalogue.zip
+  Go_1:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Go-Create/files/create.sh
+    type: go
+    relations:
+      - connects_to: MongoDB-Schema_0
+      - hosted_on: Compute_4
+    properties:
+      mongo_port: ${users-db.port}
+      mongo_pass: ${users-db.root_password}
+      workdir: github.com/microservices-demo/user
+      port: '5000'
+      entrypoint: main.go
+      name: users
+      mongo_user: ${users-db.root_user}
+      mongo_host: ${users-db.public_address}
+    artifacts:
+      - archive: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Users/files/user.zip
+  MongoDB_1:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MongoDB-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/NodeJS-Create/files/create.sh
+    relations:
+      - hosted_on: Compute_9
+    type: mongodb
+    properties:
+      port: '27017'
+      root_password: edmm
+      name: users-dbms
+      root_user: edmm
+  MongoDB_2:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MongoDB-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/NodeJS-Create/files/create.sh
+    relations:
+      - hosted_on: Compute_11
+    type: mongodb
+    properties:
+      port: '27017'
+      root_password: edmm
+      name: orders-db
+      root_user: edmm
+  MongoDB_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MongoDB-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/NodeJS-Create/files/create.sh
+    type: mongodb
+    relations:
+      - hosted_on: Compute_8
+    properties:
+      port: '27017'
+      root_password: edmm
+      name: carts-db
+      root_user: edmm
+  Compute_10:
+    type: compute
+    properties:
+      key_name: empty
+      public_key: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+  SpringBoot_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Create/files/create.sh
+    type: web_server
+    relations:
+      - connects_to: RabbitMQ_0
+      - hosted_on: Compute_2
+    properties:
+      port: '9090'
+      name: shipping
+      rabbitmq_hostname: ${rabbitmq.public_address}
+    artifacts:
+      - jar: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Shipping/files/shipping.jar
+  SpringBoot_1:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Create/files/create.sh
+    type: web_server
+    relations:
+      - connects_to: MongoDB_0
+      - hosted_on: Compute_7
+    properties:
+      mongodb_hostname: ${carts-db.public_address}
+      port: '9001'
+      name: carts
+      mongodb_port: ${carts-db.port}
+    artifacts:
+      - jar: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Carts/files/carts.jar
+  SpringBoot_2:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SpringBoot-Create/files/create.sh
+    type: web_server
+    relations:
+      - connects_to: SpringBoot_0
+      - connects_to: Go_0
+      - connects_to: MongoDB_2
+      - hosted_on: Compute_10
+    properties:
+      shipping_port: ${shipping.port}
+      port: '9999'
+      payment_port: ${payment.port}
+      payment_hostname: ${payment.public_address}
+      name: orders
+      shipping_hostname: ${shipping.public_address}
+    artifacts:
+      - jar: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/SockShop-Orders/files/orders.jar
+  RabbitMQ_0:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/RabbitMQ-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/RabbitMQ-Create/files/create.sh
+    relations:
+      - hosted_on: Compute_3
+    type: rabbitmq
+    properties:
+      port: '5672'
+      management_port: '15672'
+      name: rabbitmq
+  Compute_11:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: empty
+      os_family: linux
+      name: compute
+      machine_image: ubuntu
+      instance_type: large
+relation_types:
+  depends_on:
+    extends: null
+  hosted_on:
+    extends: depends_on
+  connects_to:
+    extends: depends_on
+component_types:
+  compute:
+    extends: base
+    properties:
+      public_key:
+        type: string
+      key_name:
+        type: string
+      os_family:
+        type: string
+      machine_image:
+        type: string
+      instance_type:
+        type: string
+  mongodb_schema:
+    extends: database
+  database:
+    extends: base
+    properties:
+      password:
+        type: string
+      schema_name:
+        type: string
+      user:
+        type: string
+  web_server:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+  go:
+    extends: web_server
+    properties:
+      workdir:
+        type: string
+      entrypoint:
+        type: string
+  mom:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+  dbms:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+  software_component:
+    extends: base
+  mysql_dbms:
+    extends: dbms
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+      version:
+        type: string
+  rabbitmq:
+    extends: mom
+    properties:
+      management_port:
+        type: integer
+  mongodb:
+    extends: dbms
+    properties:
+      root_user:
+        type: string
+  mysql_database:
+    extends: database
