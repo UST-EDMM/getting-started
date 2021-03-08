@@ -192,7 +192,6 @@ components:
       - connects_to: MongoDB-Schema_0
       - hosted_on: Compute_4
     properties:
-      HATEAOS: user
       mongo_port: ${users-db.port}
       mongo_pass: ${users-db.root_password}
       workdir: github.com/microservices-demo/user
