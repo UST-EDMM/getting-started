@@ -49,7 +49,7 @@ minikube docker-env | Invoke-Expression
 
 ```shell
 # cart service
-docker build -t carts-db ./kubernetes/kubernetes/carts-db
+docker build -t carts-db ./kubernetes/carts-db
 docker build -t carts ./kubernetes/carts
 # catalogue service
 docker build -t catalogue-db ./kubernetes/catalogue-db
