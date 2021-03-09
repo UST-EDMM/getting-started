@@ -1,5 +1,50 @@
 
+# Sock Shop - A Microservices Demo Application
+
+> Sock Shop simulates the user-facing part of an e-commerce website that sells socks.
+> It demonstrates how to implement and deploy multiple services using different programming languages ([more information](https://microservices-demo.github.io)).
+
+Next figure shows the overall application structure modeled using EDMM.
+The topology can be transformed into the files and templates required by a certain deployment automation technology, which is described below in detail for a couple of technologies.
+![](../../docs/images/sockshop_topology.png)
+
+---
+
 ## Kubernetes
+
+### Transform EDMM model
+
+#### Using the EDMM CLI
+
+```shell
+edmm transform -r ../../modeling-repository kubernetes ./deployment.yml
+```
+
+#### Using the EDMM Modeling Tool
+
+Open the topology template of the `SockShop` application.
+
+In the new browser window, click on `EDMM Transformation Check` and click on `do transformation` of the **Kubernetes** entry.
+![](../../docs/images/sockshop_transformation-kubernetes.png)
+
+Extract the downloaded package to `./kubernetes`:
+```shell
+unzip kubernetes.zip -d ./kubernetes
+```
+
+
+
+### Start a Kubernetes Cluster on Windows
+
+Start a PowerShell with administrative rights and start a Kubernetes cluster:
+```shell
+minikube start --cpus 2 --memory 4096 --vm-driver=hyperv
+```
+
+Configure PowerShell to use minikube's Docker environment:
+```shell
+minikube docker-env | Invoke-Expression
+```
 
 ### Build Docker Containers
 
@@ -26,7 +71,7 @@ docker build -t users ./kubernetes/users
 docker build -t front-end ./kubernetes/front-end
 ```
 
-### Provision Services
+### Provisioning of the Application 
 
 ```shell
 # carts service
@@ -49,4 +94,18 @@ kubectl apply -f ./kubernetes/users-db/users-db-config.yaml -f ./kubernetes/user
 kubectl apply -f ./kubernetes/users/users-config.yaml -f ./kubernetes/users/users-deployment.yaml -f ./kubernetes/users/users-service.yaml
 # front-end
 kubectl apply -f ./kubernetes/front-end/front-end-config.yaml -f ./kubernetes/front-end/front-end-deployment.yaml -f ./kubernetes/front-end/front-end-service.yaml
+```
+
+### Launch the Application
+
+```shell
+minikube service front-end-service
+# or monitor
+minikube dashboard
+```
+
+### Shutdown the Kubernetes Cluster
+
+```shell
+minikube delete
 ```

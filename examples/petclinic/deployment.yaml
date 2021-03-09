@@ -1,0 +1,141 @@
+---
+components:
+  Compute_2:
+    type: compute
+    properties:
+      public_key: |-
+        -----BEGIN PUBLIC KEY-----
+        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
+        FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
+        3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQAB
+        -----END PUBLIC KEY-----
+      key_name: edmm
+      os_family: linux
+      name: ubuntu_app
+      machine_image: ubuntu
+      instance_type: large
+  Tomcat:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Create/files/create.sh
+    type: tomcat
+    relations:
+      - hosted_on: Compute_2
+    properties:
+      port: '8080'
+      name: tomcat
+  PetClinic:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-Configure/files/configure.sh
+    type: web_application
+    relations:
+      - connects_to: MySQL_Database
+      - hosted_on: Tomcat
+    properties:
+      db_schema_name: ${db.schema_name}
+      db_user: ${db.user}
+      name: petclinic
+      db_hostname: ${db.public_address}
+      db_password: ${db.password}
+    artifacts:
+      - war: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-App/files/petclinic.war
+  MySQL_DBMS:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Create/files/create.sh
+    relations:
+      - hosted_on: Compute
+    type: mysql_dbms
+    properties:
+      port: '3306'
+      root_password: petclinic
+      name: dbms
+  Compute:
+    type: compute
+    properties:
+      key_name: edmm
+      public_key: |-
+        -----BEGIN PUBLIC KEY-----
+        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
+        FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
+        3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQAB
+        -----END PUBLIC KEY-----
+      os_family: linux
+      name: ubuntu_db
+      machine_image: ubuntu
+      instance_type: large
+  MySQL_Database:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_Database-Configure/files/configure.sh
+    relations:
+      - hosted_on: MySQL_DBMS
+    type: mysql_database
+    properties:
+      password: petclinic
+      name: db
+      schema_name: petclinic
+      user: pc
+    artifacts:
+      - sql: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Petclinic-Schema/files/schema.sql
+relation_types:
+  depends_on:
+    extends: null
+  hosted_on:
+    extends: depends_on
+  connects_to:
+    extends: depends_on
+component_types:
+  compute:
+    extends: base
+    properties:
+      public_key:
+        type: string
+      key_name:
+        type: string
+      os_family:
+        type: string
+      machine_image:
+        type: string
+      instance_type:
+        type: string
+  web_application:
+    extends: base
+  database:
+    extends: base
+    properties:
+      password:
+        type: string
+      schema_name:
+        type: string
+      user:
+        type: string
+  tomcat:
+    extends: web_server
+    properties:
+      port:
+        type: integer
+  web_server:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+  dbms:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+  software_component:
+    extends: base
+  mysql_dbms:
+    extends: dbms
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+      version:
+        type: string
+  mysql_database:
+    extends: database
