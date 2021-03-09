@@ -6,6 +6,7 @@
 
 Next figure shows the overall application structure modeled using EDMM.
 The topology can be transformed into the files and templates required by a certain deployment automation technology, which is described below in detail for a couple of technologies.
+
 ![](../../docs/images/sockshop_topology.png)
 
 ---
@@ -31,8 +32,6 @@ Extract the downloaded package to `./kubernetes`:
 ```shell
 unzip kubernetes.zip -d ./kubernetes
 ```
-
-
 
 ### Start a Kubernetes Cluster on Windows
 

@@ -8,3 +8,4 @@ target/
 .vscode/
 
 examples/sockshop/kubernetes/
+examples/petclinic/kubernetes/

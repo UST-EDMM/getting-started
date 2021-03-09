@@ -75,6 +75,7 @@ components:
       name: db
       schema_name: petclinic
       user: pc
+      version: '8'
     artifacts:
       - sql: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Petclinic-Schema/files/schema.sql
 relation_types:
