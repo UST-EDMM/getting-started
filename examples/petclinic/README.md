@@ -92,5 +92,3 @@ Shutdown application:
 ```shell
 docker-compose -f ./compose/docker-compose.yml down
 ```
-
----
