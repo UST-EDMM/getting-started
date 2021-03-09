@@ -7,8 +7,8 @@
 
 The EDMM Modeling, Decision Support, and Transformation System consists of three components:
 (1) the [EDMM Modeling Tool](https://github.com/eclipse/winery),
-(2) the [EDMM Transformation Framework](https://github.com/UST-EDMM/transformation-framework), and
-(3) the [EDMM CLI](https://github.com/UST-EDMM/transformation-framework/releases).
+(2) the [EDMM Framework](https://github.com/UST-EDMM/edmm), and
+(3) the [EDMM CLI](https://github.com/UST-EDMM/edmm/releases).
 
 ---
 
