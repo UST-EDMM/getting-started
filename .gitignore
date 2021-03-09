@@ -6,6 +6,5 @@ target/
 *.ipr
 *.log
 .vscode/
-.env
 
 examples/sockshop/kubernetes/
