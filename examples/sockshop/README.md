@@ -108,3 +108,30 @@ minikube dashboard
 ```shell
 minikube delete
 ```
+
+---
+
+## Docker Compose
+
+Execute the following statement to start the transformation to Kubernetes:
+```shell
+edmm transform -r ../../modeling-repository compose ./deployment.yml
+```
+
+Build Docker containers:
+```shell
+docker-compose -f ./compose/docker-compose.yml build
+```
+
+Deploy the application:
+```shell
+docker-compose -f ./compose/docker-compose.yml up
+```
+
+Launch sample application:
+Open a browser window and navigate to `http://{docker-hostname}:8080`
+
+Shutdown environment:
+```shell
+docker-compose -f ./compose/docker-compose.yml down
+```

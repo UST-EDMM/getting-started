@@ -223,7 +223,7 @@ components:
       - hosted_on: Compute_11
     type: mongodb
     properties:
-      port: '27017'
+      port: '27018'
       root_password: edmm
       name: orders-db
       root_user: edmm
@@ -235,7 +235,7 @@ components:
     relations:
       - hosted_on: Compute_8
     properties:
-      port: '27017'
+      port: '27019'
       root_password: edmm
       name: carts-db
       root_user: edmm
