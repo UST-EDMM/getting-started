@@ -73,22 +73,22 @@ Execute the following statement to start the transformation to Kubernetes:
 edmm transform -r ../../modeling-repository compose ./deployment.yml
 ```
 
-Build Docker images:
+Build Docker containers:
 ```shell
 docker-compose -f ./compose/docker-compose.yml build
 ```
 
-Start Docker Compose configuration:
+Deploy the application:
 ```shell
 docker-compose -f ./compose/docker-compose.yml up
-# you may need to restart the sample application
-docker-compose -f ./compose/docker-compose.yml restart petclinic
+# you may need to restart the "petclinic-service" service
+docker-compose -f ./compose/docker-compose.yml restart petclinic-service
 ```
 
 Launch sample application:
 Open a browser window and navigate to `http://{docker-hostname}:8080/petclinic`
 
-Shutdown application:
+Shutdown environment:
 ```shell
 docker-compose -f ./compose/docker-compose.yml down
 ```

@@ -9,3 +9,5 @@ target/
 
 examples/sockshop/kubernetes/
 examples/petclinic/kubernetes/
+examples/sockshop/compose/
+examples/petclinic/compose/
