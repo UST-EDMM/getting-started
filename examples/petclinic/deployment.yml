@@ -3,17 +3,14 @@ components:
   Compute_2:
     type: compute
     properties:
-      public_key: |-
-        -----BEGIN PUBLIC KEY-----
-        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
-        FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
-        3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQAB
-        -----END PUBLIC KEY-----
-      key_name: edmm
+      key_name: empty
+      public_key: empty
       os_family: linux
       name: ubuntu_app
+      public_address: 193.196.54.96
       machine_image: ubuntu
       instance_type: large
+      private_key_path: ~/.ssh/id_rsa
   Tomcat:
     operations:
       start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Start/files/start.sh
@@ -50,20 +47,18 @@ components:
       port: '3306'
       root_password: petclinic
       name: dbms
+      version: '8'
   Compute:
     type: compute
     properties:
-      key_name: edmm
-      public_key: |-
-        -----BEGIN PUBLIC KEY-----
-        MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0
-        FPqri0cb2JZfXJ/DgYSF6vUpwmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/
-        3j+skZ6UtW+5u09lHNsj6tQ51s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQAB
-        -----END PUBLIC KEY-----
+      public_key: empty
+      key_name: empty
       os_family: linux
       name: ubuntu_db
+      public_address: 193.196.52.76
       machine_image: ubuntu
       instance_type: large
+      private_key_path: ~/.ssh/id_rsa
   MySQL_Database:
     operations:
       configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_Database-Configure/files/configure.sh
@@ -75,7 +70,6 @@ components:
       name: db
       schema_name: petclinic
       user: pc
-      version: '8'
     artifacts:
       - sql: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Petclinic-Schema/files/schema.sql
 relation_types:
