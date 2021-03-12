@@ -83,7 +83,7 @@ components:
         properties:
             machine_image: ubuntu
             instance_type: large
-            key_name: test
+            key_name: <key_name>
             private_key_path: ./files/ubuntu/key.pem
         artifacts:
             - provider: ./files/ubuntu/openstack.json
@@ -94,7 +94,7 @@ components:
             hostname:
             machine_image: ubuntu
             instance_type: large
-            key_name: test
+            key_name: <key_name>
             private_key_path: ./files/ubuntu/key.pem
         artifacts:
             - provider: ./files/ubuntu/openstack.json

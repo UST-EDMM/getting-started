@@ -4,7 +4,7 @@ The prototype enables a decentralized deployment with (i) multiple participants 
 
 The following example is deployed using the upcoming steps:
 
-![](../../docs/images/petclinic_topology.png)
+![](../../docs/images/orchestration_petclinic_topology.png)
 
 In this example, two participants participate in the deployment using three deployment technologies. 
 
