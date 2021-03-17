@@ -1,6 +1,14 @@
 
 # Spring PetClinic Application
 
+> PetClinic demonstrates the use of the Spring Boot framework.
+> The PetClinic has an old and varied history dating right back to the beginning of the Spring Framework.
+> It started life as a demonstration of nearly all the common things that you could do with Spring, back when it was possible to conceive of such a demonstration.
+> These days it is a very small slice of what you could achieve, but the community has a soft spot for it, so it's nice to see it still going after all this time, so we hope you enjoy it too.
+
+Next figure shows the overall application structure modeled using EDMM.
+The topology can be transformed into the files and templates required by a certain deployment automation technology, which is described below in detail for a couple of technologies.
+
 ![](../../docs/images/petclinic_topology.png)
 
 ---
@@ -92,3 +100,24 @@ Shutdown environment:
 ```shell
 docker-compose -f ./compose/docker-compose.yml down
 ```
+
+---
+
+## Ansible
+
+Execute the following statement to start the transformation to Ansible:
+```shell
+edmm transform -r ../../modeling-repository ansible ./deployment.yml
+```
+
+Open the `*_props.json` file and adapt the following properties:
+- `PUBLIC_ADDRESS`: the public IP address where the software components should be installed on
+- `DB_HOSTNAME`: the public IP address of the VM hosting the database components
+
+Deploy the application:
+```shell
+ansible-playbook deployment.yml
+```
+
+Launch application:
+Open a browser window and navigate to `http://<public address of ubuntu_app component>:8080/petclinic`
