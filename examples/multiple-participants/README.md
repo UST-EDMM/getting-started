@@ -68,7 +68,8 @@ The following environments are set up:
 
 ![](../../docs/images/orchestration_gui.png)
 
-Note: Multiple, DTSMs and a BPMN workflow for the respective participant should be created and can be found in the repository directory.
+> **Note:** Multiple, DTSMs and a BPMN workflow for the respective participant should be created and can be found in the repository directory.
+> Examples of the generated workflows are available in the [`workflows`](workflows) directory.
 
 ### Start the deployment utilizing the generated BPMN workflows
 
@@ -82,7 +83,7 @@ Using the `nodeport` output of Kubernetes plugin shown in the EDMM Framework, we
 
 ![](../../docs/images/orchestration_petclinic.png)
 
-> **Note**: The deployment steps and output can be followed using the EDMM Framework log. 
+> **Note:** The deployment steps and output can be followed using the EDMM Framework log. 
 
 ## Additional Scenarios
 Additional scenarios can be found under the `examples/multiple-participants-special-scenarios/` folder. The folder includes EDMM files for replicating the presented scenario under the respective sections. 
