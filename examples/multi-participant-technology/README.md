@@ -61,7 +61,7 @@ After the deployment is finished, a `FINISHED` status is updated on the GUI. Usi
 
 ![](../../docs/images/orchestration_petclinic.png)
 
-
-
-
 Note: The deployment steps and output can be followed using the EDMM Framework. 
+
+## Additional Scenarios
+Additional scenarios can be found under the `/addtional-scenarios/` folder. The folder includes EDMM files for replicating the presented scenario under the respective sections. 
