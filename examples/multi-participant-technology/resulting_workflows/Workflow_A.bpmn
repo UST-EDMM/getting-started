@@ -71,12 +71,6 @@
 </bpmn:serviceTask>
 <bpmn:sequenceFlow id="Flow_2" sourceRef="ID_1" targetRef="ID_2" />
 
-
-
-
-
-
-
 <bpmn:endEvent id="EndEvent">
   <bpmn:incoming>Flow_3</bpmn:incoming>
 </bpmn:endEvent>
