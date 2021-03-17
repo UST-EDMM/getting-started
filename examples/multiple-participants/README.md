@@ -83,3 +83,6 @@ Using the `nodeport` output of Kubernetes plugin shown in the EDMM Framework, we
 ![](../../docs/images/orchestration_petclinic.png)
 
 > **Note**: The deployment steps and output can be followed using the EDMM Framework log. 
+
+## Additional Scenarios
+Additional scenarios can be found under the `examples/multiple-participants-special-scenarios/` folder. The folder includes EDMM files for replicating the presented scenario under the respective sections. 
