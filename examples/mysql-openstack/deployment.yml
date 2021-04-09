@@ -1,43 +1,5 @@
 ---
 components:
-  Compute_2:
-    type: compute
-    properties:
-      key_name: id_rsa
-      public_key: empty
-      os_family: linux
-      name: ubuntu_app
-      public_address: 193.196.54.96
-      machine_image: ubuntu
-      instance_type: large
-      private_key_path: ~/.ssh/id_rsa
-    artifacts:
-      - provider: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Ubuntu-OpenStack-Provider/files/openstack.json
-  Tomcat:
-    operations:
-      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Start/files/start.sh
-      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Create/files/create.sh
-    type: tomcat
-    relations:
-      - hosted_on: Compute_2
-    properties:
-      port: '8080'
-      name: tomcat
-  PetClinic:
-    operations:
-      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-Configure/files/configure.sh
-    type: web_application
-    relations:
-      - connects_to: MySQL_Database
-      - hosted_on: Tomcat
-    properties:
-      db_schema_name: ${db.schema_name}
-      db_user: ${db.user}
-      name: petclinic
-      db_hostname: ${db.public_address}
-      db_password: ${db.password}
-    artifacts:
-      - war: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-App/files/petclinic.war
   MySQL_DBMS:
     operations:
       start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Start/files/start.sh
@@ -81,8 +43,7 @@ relation_types:
     extends: null
   hosted_on:
     extends: depends_on
-  connects_to:
-    extends: depends_on
+multi_id: '12345'
 component_types:
   compute:
     extends: base
@@ -97,8 +58,6 @@ component_types:
         type: string
       instance_type:
         type: string
-  web_application:
-    extends: base
   database:
     extends: base
     properties:
@@ -108,16 +67,6 @@ component_types:
         type: string
       user:
         type: string
-  tomcat:
-    extends: web_server
-    properties:
-      port:
-        type: integer
-  web_server:
-    extends: software_component
-    properties:
-      port:
-        type: integer
   dbms:
     extends: software_component
     properties:
@@ -138,3 +87,9 @@ component_types:
         type: string
   mysql_database:
     extends: database
+version: edm_1_0
+orchestration_technology:
+  terraform:
+    - Compute
+    - MySQL_DBMS
+    - MySQL_Database

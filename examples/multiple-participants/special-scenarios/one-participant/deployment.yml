@@ -1,204 +1,162 @@
 ---
+components:
+  Compute_2:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: id_rsa
+      os_family: linux
+      name: ubuntu_app
+      public_address: 193.196.54.96
+      machine_image: ubuntu
+      instance_type: large
+      private_key_path: ~/.ssh/id_rsa
+    artifacts:
+      - provider: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Ubuntu-OpenStack-Provider/files/openstack.json
+  Tomcat:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Tomcat-Create/files/create.sh
+    type: tomcat
+    relations:
+      - hosted_on: Compute_2
+    properties:
+      port: '8080'
+      name: tomcat
+  PetClinic:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-Configure/files/configure.sh
+    type: web_application
+    relations:
+      - connects_to: MySQL_Database
+      - hosted_on: Tomcat
+    properties:
+      db_schema_name: ${db.schema_name}
+      db_user: ${db.user}
+      name: petclinic
+      db_hostname: ${db.public_address}
+      db_password: ${db.password}
+    artifacts:
+      - war: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/PetClinic-App/files/petclinic.war
+  MySQL_DBMS:
+    operations:
+      start: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Start/files/start.sh
+      create: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_DBMS-Create/files/create.sh
+    relations:
+      - hosted_on: Compute
+    type: mysql_dbms
+    properties:
+      port: '3306'
+      root_password: petclinic
+      name: dbms
+      version: '8'
+  Compute:
+    type: compute
+    properties:
+      public_key: empty
+      key_name: id_rsa
+      os_family: linux
+      name: ubuntu_db
+      public_address: 193.196.52.76
+      machine_image: ubuntu
+      instance_type: large
+      private_key_path: ~/.ssh/id_rsa
+    artifacts:
+      - provider: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Ubuntu-OpenStack-Provider/files/openstack.json
+  MySQL_Database:
+    operations:
+      configure: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/MySQL_Database-Configure/files/configure.sh
+    relations:
+      - hosted_on: MySQL_DBMS
+    type: mysql_database
+    properties:
+      password: petclinic
+      name: db
+      schema_name: petclinic
+      user: pc
+    artifacts:
+      - sql: artifacttemplates/https%3A%2F%2Fedmm.uni-stuttgart.de%2Fartifacttemplates/Petclinic-Schema/files/schema.sql
+relation_types:
+  depends_on:
+    extends: null
+  hosted_on:
+    extends: depends_on
+  connects_to:
+    extends: depends_on
+multi_id: '12345'
+component_types:
+  compute:
+    extends: base
+    properties:
+      public_key:
+        type: string
+      key_name:
+        type: string
+      os_family:
+        type: string
+      machine_image:
+        type: string
+      instance_type:
+        type: string
+  web_application:
+    extends: base
+  database:
+    extends: base
+    properties:
+      password:
+        type: string
+      schema_name:
+        type: string
+      user:
+        type: string
+  tomcat:
+    extends: web_server
+    properties:
+      port:
+        type: integer
+  web_server:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+  dbms:
+    extends: software_component
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+  software_component:
+    extends: base
+  mysql_dbms:
+    extends: dbms
+    properties:
+      port:
+        type: integer
+      root_password:
+        type: string
+      version:
+        type: string
+  mysql_database:
+    extends: database
 version: edm_1_0
-multi_id: 12345
-owner: partnerA
-
 orchestration_technology:
-    terraform:
-        - ubuntu_db
-    ansible:
-        - dbms
-        - db
-    kubernetes:
-        - ubuntu_app
-        - pet_clinic_tomcat
-        - pet_clinic
-
+  kubernetes:
+    - Compute_2
+    - PetClinic
+    - Tomcat
+  terraform:
+    - Compute
+  ansible:
+    - MySQL_DBMS
+    - MySQL_Database
 participants:
   partnerA:
+    components:
+      - Compute
+      - Compute_2
+      - MySQL_DBMS
+      - MySQL_Database
+      - PetClinic
+      - Tomcat
     endpoint: http://localhost:5000
-    components: 
-        - ubuntu_db
-        - db
-        - dbms
-        - ubuntu_app
-        - pet_clinic_tomcat
-        - pet_clinic
-
-components:
-    ## Spring PetClinic Application
-
-    pet_clinic:
-        type: web_application
-        artifacts:
-            - war: ./files/petclinic/petclinic.war
-        operations:
-            configure: ./files/petclinic/configure.sh
-        relations:
-            - hosted_on: pet_clinic_tomcat
-            - connects_to: db
-        properties:
-            db_hostname: ${db.hostname}
-            db_user: ${db.user}
-            db_password: ${db.password}
-            db_port: ${db.port}
-
-    pet_clinic_tomcat:
-        type: tomcat
-        operations:
-            create: ./files/tomcat/create.sh
-            start: ./files/tomcat/start.sh
-        relations:
-            - hosted_on: ubuntu_app
-
-    ## Database
-
-    db:
-        type: mysql_database
-        properties:
-            hostname: ${ubuntu_db.hostname}
-            schema_name: petclinic
-            user: pc
-            password: petclinic
-        artifacts:
-            - sql: ./files/petclinic/schema.sql
-        operations:
-            configure: ./files/mysql_database/configure.sh
-        relations:
-            - hosted_on: dbms
-
-    dbms:
-        type: mysql_dbms
-        properties:
-            hostname: ${ubuntu_db.hostname}
-            root_password: petclinic
-        operations:
-            create: ./files/mysql_dbms/create.sh
-            start: ./files/mysql_dbms/start.sh
-        relations:
-            - hosted_on: ubuntu_db
-
-    ## Compute
-
-    ubuntu_app:
-        type: compute
-        properties:
-            machine_image: ubuntu
-            instance_type: large
-            key_name: <key_name>
-            private_key_path: ./files/ubuntu/key.pem
-        artifacts:
-            - provider: ./files/ubuntu/openstack.json
-
-    ubuntu_db:
-        type: compute
-        properties:
-            hostname:
-            machine_image: ubuntu
-            instance_type: large
-            key_name: <key_name>
-            private_key_path: ./files/ubuntu/key.pem
-        artifacts:
-            - provider: ./files/ubuntu/openstack.json
-
-###############################################
-## Component Types
-###############################################
-component_types:
-    ## Generic Types
-
-    base:
-        extends: null
-        description: The base type
-        metadata: {}
-        operations:
-            create: ~
-            configure: ~
-            start: ~
-            stop: ~
-            delete: ~
-
-    software_component:
-        extends: base
-
-    compute:
-        extends: base
-        properties:
-            os_family:
-                type: string
-                description: Specifies the type of operating system
-                default_value: linux
-            machine_image:
-                type: string
-                description: The name of the machine image to use
-            instance_type:
-                type: string
-                description: The name of the instance type to provision
-            key_name:
-                type: string
-                description: The name of the key pair to use for authentication
-            public_key:
-                type: string
-                description: The public key of the key pair to use for authentication
-
-    web_server:
-        extends: software_component
-        properties:
-            port:
-                type: integer
-                default_value: 80
-
-    web_application:
-        extends: base
-
-    dbms:
-        extends: software_component
-        properties:
-            port:
-                type: integer
-            root_password:
-                type: string
-
-    database:
-        extends: base
-        properties:
-            schema_name:
-                type: string
-            user:
-                type: string
-            password:
-                type: string
-
-    ## Technology-specific Types
-
-    tomcat:
-        extends: web_server
-        properties:
-            port:
-                type: integer
-                default_value: 8080
-
-    mysql_dbms:
-        extends: dbms
-        properties:
-            port:
-                type: integer
-                default_value: 3360
-
-    mysql_database:
-        extends: database
-
-###############################################
-## Relation Types
-###############################################
-relation_types:
-    depends_on:
-        extends: null
-        properties: {}
-        operations: {}
-
-    hosted_on:
-        extends: depends_on
-
-    connects_to:
-        extends: depends_on
